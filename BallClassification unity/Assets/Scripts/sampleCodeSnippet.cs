@@ -27,37 +27,62 @@ public class sampleCodeSnippet : MonoBehaviour
                 var output = worker.Execute(input).PeekOutput();
                 var indexWithHighestProbability = output[0];
                 UnityEngine.Debug.Log($"Image was recognised as class number: " + output[0] + " " + output[1]);
-                if (beachText != null)
+                /*if (beachText != null)
+                 {
+                     beachText.text = $"Image was recognised as class number: B: {output[0]}, F: {output[1]}";
+                 }
+                */
+
+                if (output[0] > 0.5)
                 {
-                    beachText.text = $"Image was recognised as class number: B: {output[0]}, F: {output[1]}";
+                    beachText.text = $"Image was recognised as class number: B: {output[0]}, F: {output[1]} " + $" Recognised class: Beachball";
+                } 
+                 
+                  else if (output[1] > 0.5)
+                    {
+                        beachText.text = $"Image was recognised as class number: B: {output[0]}, F: {output[1]} " + $" Recognised class: Football";
+                    }
+                    else
+                    {
+                        Debug.LogError("oggetto nullo");
+                    }
                 }
-                else
-                {
-                    Debug.LogError("oggetto nullo");
-                }
-            }
-            using (var input1 = new Tensor(imageToRecognise_football, channels: 3))
+            
+
+                using (var input1 = new Tensor(imageToRecognise_football, channels: 3))
                 {
                     var output1 = worker.Execute(input1).PeekOutput();
                     var indexWithHighestProbability = output1[0];
                     UnityEngine.Debug.Log($"Image was recognised as class number: " + output1[0] + "" + output1[1]);
-                    if (footballText != null)
+                    /* if (footballText != null)
+                     {
+
+                         footballText.text = $"Image was recognised as class number: B: {output1[0]}, F: {output1[1]}";
+                     }*/
+
+                    if (output1[1] > 0.5)
                     {
-
-                        footballText.text = $"Image was recognised as class number: B: {output1[0]}, F: {output1[1]}";
+                        footballText.text = $"Image was recognised as class number: B: {output1[0]}, F: {output1[1]} " + $" Recognised class: Football";
                     }
-                    else
-                {
-                    Debug.LogError("oggetto nullo");
+                    else if (output1[0] > 0.5)
+                        {
+                            footballText.text = $"Image was recognised as class number: B: {output1[0]}, F: {output1[1]} " + $" Recognised class: Beachball";
+                        }
+                        else
+                        {
+                            Debug.LogError("oggetto nullo");
+                        }
+                    }
                 }
+
+         
+
+            // Update is called once per frame
+            void Update()
+            {
+
             }
+
         }
-       
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
